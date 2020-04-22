@@ -17,4 +17,6 @@ public interface AdminService {
 
 	public RegisterAdmin saveRegisterAdmin(RegisterAdmin theAdmin);
 
+	public Admin getAdmin(int theId);
+
 }

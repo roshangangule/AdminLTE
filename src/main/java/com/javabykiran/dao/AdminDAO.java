@@ -17,4 +17,6 @@ public interface AdminDAO {
 
 	public RegisterAdmin saveRegisterAdmin(RegisterAdmin theAdmin);
 
+	public Admin getAdmin(int theId);
+
 }

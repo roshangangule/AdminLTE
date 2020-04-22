@@ -1,3 +1,6 @@
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,48 +119,70 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Fill Below Details</h3>
 							</div>
+
+							<%
+								String username = (String) request.getAttribute("username");
+								String mobile = (String) request.getAttribute("mobile");
+								String email = (String) request.getAttribute("email");
+								String course = (String) request.getAttribute("course");
+								String gender = (String) request.getAttribute("gender");
+								String state = (String) request.getAttribute("state");
+								String password = (String) request.getAttribute("password");
+								if(username == null || mobile == null || email == null || course == null || password == null){
+									username = "";
+									mobile = "";
+									email="";
+									course="";
+									password="";
+								}
+							%>
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form class="form-horizontal" action="list"
 								modelAttribute="admin" method="post"
-								onsubmit="alert('User Added Successfully. You can not see added user.')">
+								onsubmit="alert('User Added Successfully')">
+								<%-- <form:hidden path="id"/> --%>
+
 								<div class="box-body">
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">Username</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="username" required
-												id="username" placeholder="Username" type="text">
+												id="username" placeholder="Username" 
+												type="text" value="<%=username%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Mobile</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="mobileNumber" required
-												id="mobile" placeholder="Mobile" type="number">
+												id="mobile" placeholder="Mobile"  
+												type="number" value="<%=mobile%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Email</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="email" required id="email"
-												placeholder="Email" type="email">
+												placeholder="Email"  type="email" value="<%=email%>">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="inputEmail4" class="col-sm-3 control-label">Courses</label>
 										<div class="col-sm-4">
-											<input class="form-control" name="course" required
-												id="course" placeholder="Java/J2EE" type="text">
+											<input class="form-control" 
+												name="course" required id="course" placeholder="Java/J2EE"
+												type="text" value="<%=course%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Gender</label>
 										<div class="col-sm-4" style="margin-top: 6px;">
 
-											<input name="gender" required id="Male" value="Male"
-												type="radio" style="margin-right: 2px;"> Male <input
-												name="gender" required id="Female" value="Female"
+											<input name="gender"  required id="Male"
+												value="Male" type="radio" style="margin-right: 2px; value="<%=gender%>"">
+											Male <input name="gender" required id="Female" value="Female"
 												type="radio" style="margin-right: 2px; margin-left: 10px;">
 											Female
 										</div>
@@ -165,7 +190,8 @@
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">State</label>
 										<div class="col-sm-4">
-											<select required class="form-control" name="state">
+											<select required class="form-control" 
+												name="state" value="<%=state%>">
 												<option value="">--Select State--</option>
 												<option value="Maharashtra">Maharashtra</option>
 												<option value="Delhi">Delhi</option>
@@ -177,8 +203,9 @@
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">Password</label>
 										<div class="col-sm-4">
-											<input class="form-control" name="password" required
-												id="password" placeholder="Password" type="password">
+											<input class="form-control" 
+												name="password" required id="password"
+												placeholder="Password" type="password" value="<%=password%>">
 										</div>
 									</div>
 

@@ -50,4 +50,10 @@ public class AdminServiceImpl implements AdminService{
 		
 		return adminDAO.saveRegisterAdmin(theAdmin);
 	}
+
+	@Override
+	@Transactional
+	public Admin getAdmin(int theId) {
+		return adminDAO.getAdmin(theId);
+	}
 }

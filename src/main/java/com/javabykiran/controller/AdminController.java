@@ -26,7 +26,7 @@ public class AdminController {
 
 	@RequestMapping("/login")
 	public String loginPage() {
-		
+
 		return "login";
 	}
 
@@ -37,7 +37,7 @@ public class AdminController {
 
 	@PostMapping("/dashboard")
 	public String showDashboard(@RequestParam("email") String email, @RequestParam("password") String pass,
-			Model theModel,HttpServletRequest request) {
+			Model theModel, HttpServletRequest request) {
 
 		System.out.println("email:" + email + " Password" + pass);
 
@@ -94,7 +94,6 @@ public class AdminController {
 
 		System.out.println(theAdmin);
 
-
 		return "users";
 	}
 
@@ -105,39 +104,61 @@ public class AdminController {
 
 		return "redirect:list";
 	}
-	
+
 	@PostMapping("/list")
 	public String getAdmin(@ModelAttribute("admin") Admin theAdmin) {
-		
+
 		adminService.saveAdmin(theAdmin);
-		
+
 		return "redirect:list";
 	}
-	
+
 	@GetMapping("/register")
 	public String register(Model theModel) {
-		
+
 		RegisterAdmin registerAdmin = new RegisterAdmin();
-		System.out.println(111);
+		// System.out.println(111);
 		theModel.addAttribute("registeradmin", registerAdmin);
-		System.out.println(222);
+		// System.out.println(222);
 		return "register";
 	}
-	
+
 	@PostMapping("/registerdata")
 	public String processRegister(@ModelAttribute("admin") RegisterAdmin theAdmin) {
-		
-		
+
 		System.out.println(theAdmin);
 		adminService.saveRegisterAdmin(theAdmin);
-		
+
 		return "redirect:login";
 	}
-	
+
 	@GetMapping("/dashboard")
 	public String dashboard() {
-		
+
 		return "dashboard";
+	}
+
+	@GetMapping("/update")
+	public String dashboard(@RequestParam("id") int theId, Model theModel, HttpServletRequest request) {
+		System.out.println(theId);
+
+		Admin theAdmin = adminService.getAdmin(theId);
+
+		System.out.println(theAdmin);
+		String username = theAdmin.getUsername();
+		// System.out.println(username);
+
+		request.setAttribute("username", username);
+		request.setAttribute("mobile", theAdmin.getMobileNumber());
+		request.setAttribute("email", theAdmin.getEmail());
+		request.setAttribute("course", theAdmin.getCourse());
+		request.setAttribute("gender", theAdmin.getGender());
+		request.setAttribute("state", theAdmin.getState());
+		request.setAttribute("password", theAdmin.getPassword());
+
+		theModel.addAttribute("admin", theAdmin);
+
+		return "add_user";
 	}
 
 }

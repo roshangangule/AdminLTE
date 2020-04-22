@@ -136,9 +136,16 @@
 											<td>${tempAdmin.course}</td>
 											<td>${tempAdmin.gender}</td>
 											<td>${tempAdmin.state}</td>
-											<td><a href="delete?id=${tempAdmin.id}"><span class="label label-danger"
+											<td>
+												<a href="delete?id=${tempAdmin.id}"><span class="label label-danger"
+														data-toggle="tooltip" data-placement="top"
+														title="Click to Delete">Delete</span></a>
+												|
+												<a href="update?id=${tempAdmin.id}"><span class="label label-danger"
 													data-toggle="tooltip" data-placement="top"
-													title="Click to Delete">Delete</span></a></td>
+													title="Click to Delete">Update</span></a>	
+													
+										</td>
 										</tr>
 									</c:forEach>
 								</table>
