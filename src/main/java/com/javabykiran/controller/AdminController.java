@@ -3,6 +3,7 @@ package com.javabykiran.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	boolean temp = false;
 
 	@RequestMapping("/login")
 	public String loginPage() {
@@ -66,7 +69,9 @@ public class AdminController {
 	public String addUser(Model theModel) {
 
 		Admin theAdmin = new Admin();
+		
 		theModel.addAttribute("admin", theAdmin);
+		
 		return "add_user";
 	}
 
@@ -85,8 +90,8 @@ public class AdminController {
 		return "operators";
 	}
 
-	@GetMapping("/list")
-	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin) {
+	@GetMapping("/getlist")
+	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin,HttpServletRequest request) {
 
 		List<Admin> theAdmins = adminService.getAdmins();
 
@@ -94,15 +99,32 @@ public class AdminController {
 
 		System.out.println(theAdmin);
 
+		boolean temp1 = getInfoForDelete(temp);
+		System.out.println(temp1);
+		if(!temp1) {
+			request.setAttribute("msg", "Default user can't be deleted!");
+			
+		}
+		
 		return "users";
 	}
 
 	@GetMapping("/delete")
-	public String delete(@RequestParam("id") int theId) {
+	public String delete(@RequestParam("id") int theId,HttpServletRequest request) {
 
 		boolean temp = adminService.delete(theId);
-
-		return "redirect:list";
+		
+		getInfoForDelete(temp);
+		
+		return "redirect:getlist";
+		
+	}
+	
+	private Boolean getInfoForDelete(boolean temp2) {
+		
+		temp = temp2;
+		return temp;
+		
 	}
 
 	@PostMapping("/list")
@@ -110,7 +132,7 @@ public class AdminController {
 
 		adminService.saveAdmin(theAdmin);
 
-		return "redirect:list";
+		return "redirect:getlist";
 	}
 
 	@GetMapping("/register")
@@ -148,6 +170,7 @@ public class AdminController {
 		String username = theAdmin.getUsername();
 		// System.out.println(username);
 
+		request.setAttribute("id", theAdmin.getId());
 		request.setAttribute("username", username);
 		request.setAttribute("mobile", theAdmin.getMobileNumber());
 		request.setAttribute("email", theAdmin.getEmail());

@@ -49,8 +49,7 @@
 				<div class="navbar-custom-menu">
 
 					<ul class="nav navbar-nav">
-						<li class="dropdown user user-menu"><a href="logout"
-							class="">LOGOUT</a></li>
+						<li class="dropdown user user-menu"><a href="logout" class="">LOGOUT</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -76,16 +75,14 @@
 					<li class="header">MAIN NAVIGATION</li>
 					<li class="treeview"><a href="dashboard"> <i
 							class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-					<li class="active"><a href="list"><i
-							class="fa fa-user"></i> <span>Users</span></a></li>
-					<li><a href="operator"><i class="fa fa-retweet"></i>
-							<span>Operators</span></a></li>
+					<li class="active"><a href="getlist"><i class="fa fa-user"></i>
+							<span>Users</span></a></li>
+					<li><a href="operator"><i class="fa fa-retweet"></i> <span>Operators</span></a></li>
 					<li class="treeview"><a href="links"><i
 							class="fa fa-external-link"></i> <span> Useful Links</span></a></li>
 					<li class="treeview"><a href="downloads"> <i
 							class="fa fa-download"></i> <span>Downloads</span></a></li>
-					<li><a href="logout"><i class="fa fa-power-off"></i>
-							<span>Logout</span></a></li>
+					<li><a href="logout"><i class="fa fa-power-off"></i> <span>Logout</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -97,7 +94,8 @@
 			<section class="content-header">
 				<h1>Users</h1>
 				<ol class="breadcrumb">
-					<li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="dashboard"><i class="fa fa-dashboard"></i>
+							Home</a></li>
 					<li class="active">Users</li>
 				</ol>
 			</section>
@@ -114,6 +112,18 @@
 										style="width: 100px;">Add User</button></a>
 								<div class="box-tools"></div>
 							</div>
+							<%
+								String message = null;
+								message = (String) request.getAttribute("msg");
+								if(message == null){
+									
+								}else{
+									%>
+										<p><%=message %></p>
+									<% 
+								}
+							%>
+							
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
 								<table class="table table-hover">
@@ -127,25 +137,29 @@
 										<th>State</th>
 										<th>Action</th>
 									</tr>
+									<%
+										int i = 0;
+									%>
 									<c:forEach var="tempAdmin" items="${admins}">
+										<%
+											i++;
+										%>
 										<tr>
-											<td>${tempAdmin.id}</td>
+											<td><%=i%></td>
 											<td>${tempAdmin.username}</td>
 											<td>${tempAdmin.email}</td>
 											<td>${tempAdmin.mobileNumber}</td>
 											<td>${tempAdmin.course}</td>
 											<td>${tempAdmin.gender}</td>
 											<td>${tempAdmin.state}</td>
-											<td>
-												<a href="delete?id=${tempAdmin.id}"><span class="label label-danger"
-														data-toggle="tooltip" data-placement="top"
-														title="Click to Delete">Delete</span></a>
-												|
-												<a href="update?id=${tempAdmin.id}"><span class="label label-danger"
-													data-toggle="tooltip" data-placement="top"
-													title="Click to Delete">Update</span></a>	
-													
-										</td>
+											<td><a href="delete?id=${tempAdmin.id}"><span
+													class="label label-danger" data-toggle="tooltip"
+													data-placement="top" title="Click to Delete">Delete</span></a>
+												| <a href="update?id=${tempAdmin.id}"><span
+													class="label label-danger" data-toggle="tooltip"
+													data-placement="top" title="Click to Update">Update</span></a>
+
+											</td>
 										</tr>
 									</c:forEach>
 								</table>

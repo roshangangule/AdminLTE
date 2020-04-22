@@ -39,8 +39,9 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public Admin saveAdmin(Admin theAdmin) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		//System.out.println(theAdmin);
+		// System.out.println(theAdmin);
 		currentSession.saveOrUpdate(theAdmin);
+
 		return theAdmin;
 	}
 
@@ -49,27 +50,31 @@ public class AdminDAOImpl implements AdminDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		Admin admin = (Admin) currentSession.get(Admin.class, theId);
-
-		currentSession.delete(admin);
-		return true;
+		if(theId > 0 && theId <=2) {
+			return false;
+		}else {
+			currentSession.delete(admin);
+			return true;
+			
+		}
 	}
 
 	@Override
 	public RegisterAdmin saveRegisterAdmin(RegisterAdmin theAdmin) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		currentSession.save(theAdmin);
-		
+
 		return theAdmin;
 	}
 
 	@Override
 	public Admin getAdmin(int theId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		Admin admin = (Admin) currentSession.get(Admin.class, theId);
 		System.out.println(admin);
-		
+
 		return admin;
 	}
 

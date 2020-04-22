@@ -1,5 +1,5 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -82,17 +82,17 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="dashboard.html"> <i
+					<li class="treeview"><a href="dashboard"> <i
 							class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-					<li class="active"><a href="users.html"><i
+					<li class="active"><a href="getlist"><i
 							class="fa fa-user"></i> <span>Users</span></a></li>
-					<li><a href="operators.html"><i class="fa fa-retweet"></i>
+					<li><a href="operator"><i class="fa fa-retweet"></i>
 							<span>Operators</span></a></li>
-					<li class="treeview"><a href="links.html"><i
+					<li class="treeview"><a href="links"><i
 							class="fa fa-external-link"></i> <span> Useful Links</span></a></li>
-					<li class="treeview"><a href="downloads.html"> <i
+					<li class="treeview"><a href="downloads"> <i
 							class="fa fa-download"></i> <span>Downloads</span></a></li>
-					<li><a href="logout.html"><i class="fa fa-power-off"></i>
+					<li><a href="logout"><i class="fa fa-power-off"></i>
 							<span>Logout</span></a></li>
 				</ul>
 			</section>
@@ -105,7 +105,7 @@
 			<section class="content-header">
 				<h1>Add User</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
 					<li class="active">Add User</li>
 				</ol>
 			</section>
@@ -121,6 +121,7 @@
 							</div>
 
 							<%
+								Integer id = (Integer) request.getAttribute("id");
 								String username = (String) request.getAttribute("username");
 								String mobile = (String) request.getAttribute("mobile");
 								String email = (String) request.getAttribute("email");
@@ -128,12 +129,12 @@
 								String gender = (String) request.getAttribute("gender");
 								String state = (String) request.getAttribute("state");
 								String password = (String) request.getAttribute("password");
-								if(username == null || mobile == null || email == null || course == null || password == null){
+								if (username == null || mobile == null || email == null || course == null || password == null) {
 									username = "";
 									mobile = "";
-									email="";
-									course="";
-									password="";
+									email = "";
+									course = "";
+									password = "";
 								}
 							%>
 							<!-- /.box-header -->
@@ -141,47 +142,59 @@
 							<form class="form-horizontal" action="list"
 								modelAttribute="admin" method="post"
 								onsubmit="alert('User Added Successfully')">
-								<%-- <form:hidden path="id"/> --%>
 
+
+							  
+							  
+							  <%
+							  
+							  		if(!username.isEmpty()){
+							  			%>
+							  			<input type = "hidden" name = "id" value="<%=id%>"/>  
+							  			<%
+							  		}
+							  
+							  %>
+							 
 								<div class="box-body">
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">Username</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="username" required
-												id="username" placeholder="Username" 
-												type="text" value="<%=username%>">
+												id="username" placeholder="Username" type="text"
+												value="<%=username%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Mobile</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="mobileNumber" required
-												id="mobile" placeholder="Mobile"  
-												type="number" value="<%=mobile%>">
+												id="mobile" placeholder="Mobile" type="number"
+												value="<%=mobile%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Email</label>
 										<div class="col-sm-4">
 											<input class="form-control" name="email" required id="email"
-												placeholder="Email"  type="email" value="<%=email%>">
+												placeholder="Email" type="email" value="<%=email%>">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="inputEmail4" class="col-sm-3 control-label">Courses</label>
 										<div class="col-sm-4">
-											<input class="form-control" 
-												name="course" required id="course" placeholder="Java/J2EE"
-												type="text" value="<%=course%>">
+											<input class="form-control" name="course" required
+												id="course" placeholder="Java/J2EE" type="text"
+												value="<%=course%>">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 control-label">Gender</label>
 										<div class="col-sm-4" style="margin-top: 6px;">
 
-											<input name="gender"  required id="Male"
-												value="Male" type="radio" style="margin-right: 2px; value="<%=gender%>"">
+											<input name="gender" required id="Male" value="Male"
+												type="radio" style="margin-right: 2px;"<%=gender%>"">
 											Male <input name="gender" required id="Female" value="Female"
 												type="radio" style="margin-right: 2px; margin-left: 10px;">
 											Female
@@ -190,8 +203,8 @@
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">State</label>
 										<div class="col-sm-4">
-											<select required class="form-control" 
-												name="state" value="<%=state%>">
+											<select required class="form-control" name="state"
+												value="<%=state%>">
 												<option value="">--Select State--</option>
 												<option value="Maharashtra">Maharashtra</option>
 												<option value="Delhi">Delhi</option>
@@ -203,9 +216,9 @@
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">Password</label>
 										<div class="col-sm-4">
-											<input class="form-control" 
-												name="password" required id="password"
-												placeholder="Password" type="password" value="<%=password%>">
+											<input class="form-control" name="password" required
+												id="password" placeholder="Password" type="password"
+												value="<%=password%>">
 										</div>
 									</div>
 
@@ -215,7 +228,7 @@
 									<button type="submit" id="submit"
 										class="btn btn-info pull-right"
 										style="margin-left: 5px; width: 150px;">Submit</button>
-									<a href="list"><span class="btn btn-default pull-right"
+									<a href="getlist"><span class="btn btn-default pull-right"
 										style="width: 150px;">Cancel</span></a>
 								</div>
 								<!-- /.box-footer -->
