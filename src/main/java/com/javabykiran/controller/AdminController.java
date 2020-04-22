@@ -2,6 +2,8 @@ package com.javabykiran.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.RegisterAdmin;
 import com.javabykiran.service.AdminService;
 
 @Controller
@@ -21,8 +24,9 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@GetMapping("/login")
+	@RequestMapping("/login")
 	public String loginPage() {
+		
 		return "login";
 	}
 
@@ -33,18 +37,18 @@ public class AdminController {
 
 	@PostMapping("/dashboard")
 	public String showDashboard(@RequestParam("email") String email, @RequestParam("password") String pass,
-			Model theModel) {
+			Model theModel,HttpServletRequest request) {
 
 		System.out.println("email:" + email + " Password" + pass);
 
 		String userName = null;
 
-		List<Admin> admin = adminService.checkLogin(email, pass);
+		List<RegisterAdmin> admin = adminService.checkLogin(email, pass);
 
 		System.out.println(admin);
 
-		for (Admin tempAdmin : admin) {
-			userName = tempAdmin.getUsername();
+		for (RegisterAdmin tempAdmin : admin) {
+			userName = tempAdmin.getName();
 			userName = userName.toUpperCase();
 		}
 
@@ -52,6 +56,7 @@ public class AdminController {
 			return "redirect:login";
 		} else {
 			theModel.addAttribute("username", userName);
+			request.setAttribute("username", userName);
 			return "dashboard";
 		}
 
@@ -80,12 +85,7 @@ public class AdminController {
 		return "operators";
 	}
 
-	@RequestMapping("/register")
-	public String register() {
-		return "register";
-	}
-
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin) {
 
 		List<Admin> theAdmins = adminService.getAdmins();
@@ -94,17 +94,50 @@ public class AdminController {
 
 		System.out.println(theAdmin);
 
-		adminService.saveAdmin(theAdmin);
 
 		return "users";
 	}
 
-	@GetMapping("delete")
+	@GetMapping("/delete")
 	public String delete(@RequestParam("id") int theId) {
 
 		boolean temp = adminService.delete(theId);
 
 		return "redirect:list";
+	}
+	
+	@PostMapping("/list")
+	public String getAdmin(@ModelAttribute("admin") Admin theAdmin) {
+		
+		adminService.saveAdmin(theAdmin);
+		
+		return "redirect:list";
+	}
+	
+	@GetMapping("/register")
+	public String register(Model theModel) {
+		
+		RegisterAdmin registerAdmin = new RegisterAdmin();
+		System.out.println(111);
+		theModel.addAttribute("registeradmin", registerAdmin);
+		System.out.println(222);
+		return "register";
+	}
+	
+	@PostMapping("/registerdata")
+	public String processRegister(@ModelAttribute("admin") RegisterAdmin theAdmin) {
+		
+		
+		System.out.println(theAdmin);
+		adminService.saveRegisterAdmin(theAdmin);
+		
+		return "redirect:login";
+	}
+	
+	@GetMapping("/dashboard")
+	public String dashboard() {
+		
+		return "dashboard";
 	}
 
 }

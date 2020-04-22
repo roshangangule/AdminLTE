@@ -40,8 +40,8 @@
 
 		<div class="register-box-body">
 			<p class="login-box-msg">Register a new membership</p>
-			<form action="${pageContext.request.contextPath}/index.html"
-				id="form" method="post">
+			<form action="registerdata" id="form" modelAttribute="registeradmin"
+				method="post">
 				<div class="form-group has-feedback">
 					<input type="text" name="name" id="name" class="form-control"
 						placeholder="Name"> <span
@@ -71,15 +71,15 @@
 				<div class="row">
 
 					<div class="col-xs-12">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign
-							In</button>
+						<input type="submit" class="btn btn-primary btn-block btn-flat"
+							value="Sign In">
 					</div>
 					<!-- /.col -->
 				</div>
 			</form>
 
-			<br> <a href=${pageContext.request.contextPath}/index.html
-				" class="text-center">I already have a membership</a>
+			<br> <a href="login" " class="text-center">I already have a
+				membership</a>
 		</div>
 		<!-- /.form-box -->
 	</div>

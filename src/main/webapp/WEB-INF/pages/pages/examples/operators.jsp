@@ -49,7 +49,7 @@
               
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
-                <a href="logout.html" class="">LOGOUT</a>
+                <a href="logout" class="">LOGOUT</a>
 
               </li>
             </ul>

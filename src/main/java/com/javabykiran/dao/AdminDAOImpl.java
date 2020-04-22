@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.RegisterAdmin;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -26,11 +27,11 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<Admin> checkLogin(String email, String pass) {
+	public List<RegisterAdmin> checkLogin(String email, String pass) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		List<Admin> admin = currentSession
-				.createQuery("from Admin where " + "email='" + email + "' and password='" + pass + "'").list();
+		List<RegisterAdmin> admin = currentSession
+				.createQuery("from RegisterAdmin where " + "email='" + email + "' and password='" + pass + "'").list();
 
 		return admin;
 	}
@@ -38,7 +39,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public Admin saveAdmin(Admin theAdmin) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		System.out.println(theAdmin);
+		//System.out.println(theAdmin);
 		currentSession.save(theAdmin);
 		return theAdmin;
 	}
@@ -51,6 +52,15 @@ public class AdminDAOImpl implements AdminDAO {
 
 		currentSession.delete(admin);
 		return true;
+	}
+
+	@Override
+	public RegisterAdmin saveRegisterAdmin(RegisterAdmin theAdmin) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		currentSession.save(theAdmin);
+		
+		return theAdmin;
 	}
 
 }

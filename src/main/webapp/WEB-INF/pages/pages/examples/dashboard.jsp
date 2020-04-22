@@ -66,7 +66,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview"><a href="redirect:dashboard">
+            <li class="active treeview"><a href="dashboard">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li><a href="list"><i class="fa fa-user"></i> <span>Users</span></a></li>
             <li><a href="operator"><i class="fa fa-retweet"></i> <span>Operators</span></a></li>

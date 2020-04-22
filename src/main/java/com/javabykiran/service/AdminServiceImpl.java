@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javabykiran.dao.AdminDAO;
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.RegisterAdmin;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -24,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	@Transactional
-	public List<Admin> checkLogin(String email, String pass) {
+	public List<RegisterAdmin> checkLogin(String email, String pass) {
 		
 		return adminDAO.checkLogin(email,pass);
 	}
@@ -41,5 +42,12 @@ public class AdminServiceImpl implements AdminService{
 	public boolean delete(int theId) {
 		
 		return adminDAO.delete(theId);
+	}
+
+	@Override
+	@Transactional
+	public RegisterAdmin saveRegisterAdmin(RegisterAdmin theAdmin) {
+		
+		return adminDAO.saveRegisterAdmin(theAdmin);
 	}
 }
