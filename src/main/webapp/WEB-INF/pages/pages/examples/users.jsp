@@ -112,7 +112,7 @@
 										style="width: 100px;">Add User</button></a>
 								<div class="box-tools"></div>
 							</div>
-							<%
+							<%-- <%
 								String message = null;
 								message = (String) request.getAttribute("msg");
 								if(message == null){
@@ -122,7 +122,7 @@
 										<p><%=message %></p>
 									<% 
 								}
-							%>
+							%> --%>
 							
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -154,7 +154,12 @@
 											<td>${tempAdmin.state}</td>
 											<td><a href="delete?id=${tempAdmin.id}"><span
 													class="label label-danger" data-toggle="tooltip"
-													data-placement="top" title="Click to Delete">Delete</span></a>
+													data-placement="top" title="Click to Delete"
+													onclick="
+													if('${tempAdmin.isDefault}' == 'Y'){
+														return alert('You can not delete Default User')
+													}
+													return delete_user('${tempAdmin.id}')">Delete</span></a>
 												| <a href="update?id=${tempAdmin.id}"><span
 													class="label label-danger" data-toggle="tooltip"
 													data-placement="top" title="Click to Update">Update</span></a>
@@ -269,8 +274,8 @@
 	<!-- jQuery 2.1.4 --> --%>
 	<script
 		src="${pageContext.request.contextPath}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<!-- <script>
-		function delete_user(id) {
+	<script>
+		function delete_user() {
 			if (!confirm("Are you sure you want to delete this user"))
 				return false;
 
@@ -278,6 +283,6 @@
 			alert("User deleted successfully.");
 			return false;
 		};
-	</script> -->
+	</script>
 </body>
 </html>

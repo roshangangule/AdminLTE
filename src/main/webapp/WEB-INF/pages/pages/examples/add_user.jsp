@@ -194,10 +194,21 @@
 										<div class="col-sm-4" style="margin-top: 6px;">
 
 											<input name="gender" required id="Male" value="Male"
-												type="radio" style="margin-right: 2px;"<%=gender%>"">
+												type="radio" style="margin-right: 2px;">
 											Male <input name="gender" required id="Female" value="Female"
 												type="radio" style="margin-right: 2px; margin-left: 10px;">
 											Female
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="" class="col-sm-3 control-label">Is Default</label>
+										<div class="col-sm-4" style="margin-top: 6px;">
+
+											<input name="isDefault" required id="" value="Y"
+												type="radio" style="margin-right: 2px;">
+											Y <input name="isDefault" required id="" value="N"
+												type="radio" style="margin-right: 2px; margin-left: 10px;">
+											N
 										</div>
 									</div>
 									<div class="form-group">

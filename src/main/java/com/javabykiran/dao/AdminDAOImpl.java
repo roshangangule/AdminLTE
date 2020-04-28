@@ -50,7 +50,9 @@ public class AdminDAOImpl implements AdminDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		Admin admin = (Admin) currentSession.get(Admin.class, theId);
-		if(theId > 0 && theId <=2) {
+		String isDefault = admin.getIsDefault();
+		
+		if(isDefault.equals("Y")) {
 			return false;
 		}else {
 			currentSession.delete(admin);

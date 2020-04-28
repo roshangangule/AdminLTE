@@ -8,37 +8,40 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="employee2")
+@Table(name = "user")
 public class Admin {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="email")
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="mobile")
+
+	@Column(name = "mobile")
 	private String mobileNumber;
-	
-	@Column(name="gender")
+
+	@Column(name = "gender")
 	private String gender;
-	
-	@Column(name="state")
+
+	@Column(name = "state")
 	private String state;
-	
-	@Column(name="course")
+
+	@Column(name = "course")
 	private String course;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
+
+	@Column(name = "isDefault")
+	private String isDefault;
+
 	public Admin() {
-		
+
 	}
 
 	public int getId() {
@@ -88,7 +91,6 @@ public class Admin {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
 
 	public String getCourse() {
 		return course;
@@ -97,7 +99,6 @@ public class Admin {
 	public void setCourse(String course) {
 		this.course = course;
 	}
-	
 
 	public String getPassword() {
 		return password;
@@ -107,12 +108,20 @@ public class Admin {
 		this.password = password;
 	}
 
+	public String getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(String isDefault) {
+		this.isDefault = isDefault;
+	}
+
 	@Override
 	public String toString() {
 		return "Admin [id=" + id + ", username=" + username + ", email=" + email + ", mobileNumber=" + mobileNumber
-				+ ", gender=" + gender + ", state=" + state + "]";
+				+ ", gender=" + gender + ", state=" + state + ", course=" + course + ", password=" + password
+				+ ", isDefault=" + isDefault + "]";
 	}
 	
-	
-	
+
 }

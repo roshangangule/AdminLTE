@@ -24,7 +24,7 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	boolean temp = false;
 
 	@RequestMapping("/login")
@@ -69,9 +69,9 @@ public class AdminController {
 	public String addUser(Model theModel) {
 
 		Admin theAdmin = new Admin();
-		
+
 		theModel.addAttribute("admin", theAdmin);
-		
+
 		return "add_user";
 	}
 
@@ -91,7 +91,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/getlist")
-	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin,HttpServletRequest request) {
+	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin, HttpServletRequest request) {
 
 		List<Admin> theAdmins = adminService.getAdmins();
 
@@ -101,35 +101,36 @@ public class AdminController {
 
 		boolean temp1 = getInfoForDelete(temp);
 		System.out.println(temp1);
-		if(!temp1) {
+		if (!temp1) {
 			request.setAttribute("msg", "Default user can't be deleted!");
-			
+
 		}
-		
+
 		return "users";
 	}
 
 	@GetMapping("/delete")
-	public String delete(@RequestParam("id") int theId,HttpServletRequest request) {
+	public String delete(@RequestParam("id") int theId, HttpServletRequest request) {
 
 		boolean temp = adminService.delete(theId);
-		
+
 		getInfoForDelete(temp);
-		
+
 		return "redirect:getlist";
-		
+
 	}
-	
+
 	private Boolean getInfoForDelete(boolean temp2) {
-		
+
 		temp = temp2;
 		return temp;
-		
+
 	}
 
 	@PostMapping("/list")
 	public String getAdmin(@ModelAttribute("admin") Admin theAdmin) {
 
+		System.out.println(theAdmin);
 		adminService.saveAdmin(theAdmin);
 
 		return "redirect:getlist";
