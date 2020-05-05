@@ -140,18 +140,24 @@
 									<%
 										int i = 0;
 									%>
+									
+									
 									<c:forEach var="tempAdmin" items="${admins}">
 										<%
 											i++;
 										%>
 										<tr>
+										
+										
 											<td><%=i%></td>
 											<td>${tempAdmin.username}</td>
 											<td>${tempAdmin.email}</td>
 											<td>${tempAdmin.mobileNumber}</td>
 											<td>${tempAdmin.course}</td>
 											<td>${tempAdmin.gender}</td>
-											<td>${tempAdmin.state}</td>
+											<td>
+												<c:out value="${tempAdmin.theState.state }"></c:out>
+											</td>
 											<td><a href="delete?id=${tempAdmin.id}"><span
 													class="label label-danger" data-toggle="tooltip"
 													data-placement="top" title="Click to Delete"

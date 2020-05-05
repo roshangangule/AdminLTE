@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javabykiran.dao.AdminDAO;
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.Admin2;
 import com.javabykiran.model.RegisterAdmin;
+import com.javabykiran.model.State;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -18,7 +20,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	@Transactional
-	public List<Admin> getAdmins() {
+	public List<Admin2> getAdmins() {
 		
 		return adminDAO.getAdmins();
 	}
@@ -32,7 +34,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	@Transactional
-	public Admin saveAdmin(Admin theAdmin) {
+	public Admin2 saveAdmin(Admin2 theAdmin) {
 		// TODO Auto-generated method stub
 		return adminDAO.saveAdmin(theAdmin);
 	}
@@ -53,7 +55,14 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	@Transactional
-	public Admin getAdmin(int theId) {
+	public Admin2 getAdmin(int theId) {
 		return adminDAO.getAdmin(theId);
+	}
+
+	@Override
+	@Transactional
+	public List<State> getState() {
+		
+		return adminDAO.getState();
 	}
 }

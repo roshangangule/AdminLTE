@@ -3,7 +3,7 @@ package com.javabykiran.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.StyledEditorKit.BoldAction;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.Admin2;
 import com.javabykiran.model.RegisterAdmin;
+import com.javabykiran.model.State;
 import com.javabykiran.service.AdminService;
 
 @Controller
@@ -40,7 +42,7 @@ public class AdminController {
 
 	@PostMapping("/dashboard")
 	public String showDashboard(@RequestParam("email") String email, @RequestParam("password") String pass,
-			Model theModel, HttpServletRequest request) {
+			Model theModel, HttpServletRequest request, HttpSession session) {
 
 		System.out.println("email:" + email + " Password" + pass);
 
@@ -58,8 +60,8 @@ public class AdminController {
 		if (userName == null) {
 			return "redirect:login";
 		} else {
-			theModel.addAttribute("username", userName);
-			request.setAttribute("username", userName);
+			//theModel.addAttribute("username", userName);
+			session.setAttribute("username", userName);
 			return "dashboard";
 		}
 
@@ -68,9 +70,14 @@ public class AdminController {
 	@RequestMapping("/adduser")
 	public String addUser(Model theModel) {
 
-		Admin theAdmin = new Admin();
+		Admin2 theAdmin = new Admin2();
 
 		theModel.addAttribute("admin", theAdmin);
+		List<State> theStates = null;
+
+		theStates = adminService.getState();
+		
+		theModel.addAttribute("state", theStates);
 
 		return "add_user";
 	}
@@ -91,9 +98,13 @@ public class AdminController {
 	}
 
 	@GetMapping("/getlist")
-	public String showUsers(Model theModel, @ModelAttribute("admin") Admin theAdmin, HttpServletRequest request) {
+	public String showUsers(Model theModel, @ModelAttribute("admin") Admin2 theAdmin, HttpServletRequest request) {
 
-		List<Admin> theAdmins = adminService.getAdmins();
+		List<Admin2> theAdmins = adminService.getAdmins();
+
+		for (Admin2 theAdmin2 : theAdmins) {
+			System.out.println(theAdmin2);
+		}
 
 		theModel.addAttribute("admins", theAdmins);
 
@@ -128,9 +139,8 @@ public class AdminController {
 	}
 
 	@PostMapping("/list")
-	public String getAdmin(@ModelAttribute("admin") Admin theAdmin) {
-
-		System.out.println(theAdmin);
+	public String getAdmin(@ModelAttribute("admin") Admin2 theAdmin) {
+		//theAdmin.getTheState().setId(0);
 		adminService.saveAdmin(theAdmin);
 
 		return "redirect:getlist";
@@ -165,9 +175,18 @@ public class AdminController {
 	public String dashboard(@RequestParam("id") int theId, Model theModel, HttpServletRequest request) {
 		System.out.println(theId);
 
-		Admin theAdmin = adminService.getAdmin(theId);
+		Admin2 theAdmin = adminService.getAdmin(theId);
 
 		System.out.println(theAdmin);
+		List<State> theStates = null;
+		
+		if (theStates == null) {
+			theStates = adminService.getState();
+
+			theModel.addAttribute("state", theStates);
+		}
+		
+
 		String username = theAdmin.getUsername();
 		// System.out.println(username);
 
@@ -177,9 +196,8 @@ public class AdminController {
 		request.setAttribute("email", theAdmin.getEmail());
 		request.setAttribute("course", theAdmin.getCourse());
 		request.setAttribute("gender", theAdmin.getGender());
-		request.setAttribute("state", theAdmin.getState());
 		request.setAttribute("password", theAdmin.getPassword());
-
+		//request.setAttribute("state", theAdmin.getTheState().getState());
 		theModel.addAttribute("admin", theAdmin);
 
 		return "add_user";

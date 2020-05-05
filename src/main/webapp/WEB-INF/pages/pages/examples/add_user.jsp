@@ -1,5 +1,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -34,6 +35,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -84,16 +86,14 @@
 					<li class="header">MAIN NAVIGATION</li>
 					<li class="treeview"><a href="dashboard"> <i
 							class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-					<li class="active"><a href="getlist"><i
-							class="fa fa-user"></i> <span>Users</span></a></li>
-					<li><a href="operator"><i class="fa fa-retweet"></i>
-							<span>Operators</span></a></li>
+					<li class="active"><a href="getlist"><i class="fa fa-user"></i>
+							<span>Users</span></a></li>
+					<li><a href="operator"><i class="fa fa-retweet"></i> <span>Operators</span></a></li>
 					<li class="treeview"><a href="links"><i
 							class="fa fa-external-link"></i> <span> Useful Links</span></a></li>
 					<li class="treeview"><a href="downloads"> <i
 							class="fa fa-download"></i> <span>Downloads</span></a></li>
-					<li><a href="logout"><i class="fa fa-power-off"></i>
-							<span>Logout</span></a></li>
+					<li><a href="logout"><i class="fa fa-power-off"></i> <span>Logout</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -105,7 +105,8 @@
 			<section class="content-header">
 				<h1>Add User</h1>
 				<ol class="breadcrumb">
-					<li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="dashboard"><i class="fa fa-dashboard"></i>
+							Home</a></li>
 					<li class="active">Add User</li>
 				</ol>
 			</section>
@@ -127,14 +128,15 @@
 								String email = (String) request.getAttribute("email");
 								String course = (String) request.getAttribute("course");
 								String gender = (String) request.getAttribute("gender");
-								String state = (String) request.getAttribute("state");
 								String password = (String) request.getAttribute("password");
+								//String state = (String) request.getAttribute("state");
 								if (username == null || mobile == null || email == null || course == null || password == null) {
 									username = "";
 									mobile = "";
 									email = "";
 									course = "";
 									password = "";
+									//state="";
 								}
 							%>
 							<!-- /.box-header -->
@@ -144,18 +146,16 @@
 								onsubmit="alert('User Added Successfully')">
 
 
-							  
-							  
-							  <%
-							  
-							  		if(!username.isEmpty()){
-							  			%>
-							  			<input type = "hidden" name = "id" value="<%=id%>"/>  
-							  			<%
-							  		}
-							  
-							  %>
-							 
+
+
+								<%
+									if (!username.isEmpty()) {
+								%>
+								<input type="hidden" name="id" value="<%=id%>" />
+								<%
+									}
+								%>
+
 								<div class="box-body">
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">Username</label>
@@ -194,33 +194,45 @@
 										<div class="col-sm-4" style="margin-top: 6px;">
 
 											<input name="gender" required id="Male" value="Male"
-												type="radio" style="margin-right: 2px;">
-											Male <input name="gender" required id="Female" value="Female"
+												type="radio" style="margin-right: 2px;"> Male <input
+												name="gender" required id="Female" value="Female"
 												type="radio" style="margin-right: 2px; margin-left: 10px;">
 											Female
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="" class="col-sm-3 control-label">Is Default</label>
+										<label for="" class="col-sm-3 control-label">Is
+											Default</label>
 										<div class="col-sm-4" style="margin-top: 6px;">
 
-											<input name="isDefault" required id="" value="Y"
-												type="radio" style="margin-right: 2px;">
-											Y <input name="isDefault" required id="" value="N"
-												type="radio" style="margin-right: 2px; margin-left: 10px;">
-											N
+											<input name="isDefault" required id="" value="Y" type="radio"
+												style="margin-right: 2px;"> Y <input
+												name="isDefault" required id="" value="N" type="radio"
+												style="margin-right: 2px; margin-left: 10px;"> N
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">State</label>
 										<div class="col-sm-4">
-											<select required class="form-control" name="state"
-												value="<%=state%>">
+
+											<%-- <select name="theState" items="${state}" multiple="true"
+												itemValue="id" itemLabel="type"
+												class="form-control" /> --%>
+											<select required class="form-control" name="theState.id"
+												value="">
 												<option value="">--Select State--</option>
-												<option value="Maharashtra">Maharashtra</option>
-												<option value="Delhi">Delhi</option>
+												<s:forEach var="tempState" items="${state}">
+
+													<option type = "hidden" value='<c:out value="${tempState.id}" />'>
+														<c:out value="${tempState.state}" />
+													</option>
+
+												</s:forEach>
+
+
+												<!-- <option value="Delhi">Delhi</option>
 												<option value="HP">HP</option>
-												<option value="Punjab">Punjab</option>
+												<option value="Punjab">Punjab</option> -->
 											</select>
 										</div>
 									</div>

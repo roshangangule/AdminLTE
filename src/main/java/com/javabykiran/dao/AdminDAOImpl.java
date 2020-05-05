@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javabykiran.model.Admin;
+import com.javabykiran.model.Admin2;
 import com.javabykiran.model.RegisterAdmin;
+import com.javabykiran.model.State;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -18,11 +20,11 @@ public class AdminDAOImpl implements AdminDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Admin> getAdmins() {
+	public List<Admin2> getAdmins() {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		Query query = currentSession.createQuery("from Admin");
-		List<Admin> admins = query.list();
+		Query query = currentSession.createQuery("from Admin2");
+		List<Admin2> admins = query.list();
 		return admins;
 	}
 
@@ -37,9 +39,9 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public Admin saveAdmin(Admin theAdmin) {
+	public Admin2 saveAdmin(Admin2 theAdmin) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		// System.out.println(theAdmin);
+		System.out.println(theAdmin);
 		currentSession.saveOrUpdate(theAdmin);
 
 		return theAdmin;
@@ -49,7 +51,7 @@ public class AdminDAOImpl implements AdminDAO {
 	public boolean delete(int theId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		Admin admin = (Admin) currentSession.get(Admin.class, theId);
+		Admin2 admin = (Admin2) currentSession.get(Admin2.class, theId);
 		String isDefault = admin.getIsDefault();
 		
 		if(isDefault.equals("Y")) {
@@ -71,13 +73,25 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public Admin getAdmin(int theId) {
+	public Admin2 getAdmin(int theId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		Admin admin = (Admin) currentSession.get(Admin.class, theId);
+		Admin2 admin = (Admin2) currentSession.get(Admin2.class, theId);
 		System.out.println(admin);
 
 		return admin;
+	}
+
+	@Override
+	public List<State> getState() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		
+		Query query = currentSession.createQuery("from State");
+		List<State> theStates = query.list();
+		State theState = new State();
+		
+		return theStates;
 	}
 
 }
