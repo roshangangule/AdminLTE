@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.javabykiran.dao.AdminDAO;
 import com.javabykiran.model.Admin;
 import com.javabykiran.model.Admin2;
+import com.javabykiran.model.Links;
+import com.javabykiran.model.Operator;
 import com.javabykiran.model.RegisterAdmin;
 import com.javabykiran.model.State;
 
@@ -64,5 +66,18 @@ public class AdminServiceImpl implements AdminService{
 	public List<State> getState() {
 		
 		return adminDAO.getState();
+	}
+
+	@Override
+	@Transactional
+	public List<Links> getLinks() {
+		return adminDAO.getLinks();
+	}
+
+	@Override
+	@Transactional
+	public List<Operator> getOperators() {
+		
+		return adminDAO.getOperators();
 	}
 }

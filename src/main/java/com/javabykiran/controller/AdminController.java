@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javabykiran.model.Admin;
 import com.javabykiran.model.Admin2;
+import com.javabykiran.model.Links;
+import com.javabykiran.model.Operator;
 import com.javabykiran.model.RegisterAdmin;
 import com.javabykiran.model.State;
 import com.javabykiran.service.AdminService;
@@ -60,7 +61,7 @@ public class AdminController {
 		if (userName == null) {
 			return "redirect:login";
 		} else {
-			//theModel.addAttribute("username", userName);
+			// theModel.addAttribute("username", userName);
 			session.setAttribute("username", userName);
 			return "dashboard";
 		}
@@ -76,7 +77,7 @@ public class AdminController {
 		List<State> theStates = null;
 
 		theStates = adminService.getState();
-		
+
 		theModel.addAttribute("state", theStates);
 
 		return "add_user";
@@ -88,12 +89,22 @@ public class AdminController {
 	}
 
 	@RequestMapping("/links")
-	public String showLink() {
+	public String showLink(Model theModel) {
+		
+		List<Links> theLinks = adminService.getLinks();
+		
+		theModel.addAttribute("links", theLinks);
+		
 		return "links";
 	}
 
 	@RequestMapping("/operator")
-	public String operator() {
+	public String operator(Model theModel) {
+		
+		List<Operator> theOperators = adminService.getOperators();
+		
+		theModel.addAttribute("operators", theOperators);
+		
 		return "operators";
 	}
 
@@ -140,7 +151,7 @@ public class AdminController {
 
 	@PostMapping("/list")
 	public String getAdmin(@ModelAttribute("admin") Admin2 theAdmin) {
-		//theAdmin.getTheState().setId(0);
+		// theAdmin.getTheState().setId(0);
 		adminService.saveAdmin(theAdmin);
 
 		return "redirect:getlist";
@@ -179,13 +190,12 @@ public class AdminController {
 
 		System.out.println(theAdmin);
 		List<State> theStates = null;
-		
+
 		if (theStates == null) {
 			theStates = adminService.getState();
 
 			theModel.addAttribute("state", theStates);
 		}
-		
 
 		String username = theAdmin.getUsername();
 		// System.out.println(username);
@@ -197,7 +207,7 @@ public class AdminController {
 		request.setAttribute("course", theAdmin.getCourse());
 		request.setAttribute("gender", theAdmin.getGender());
 		request.setAttribute("password", theAdmin.getPassword());
-		//request.setAttribute("state", theAdmin.getTheState().getState());
+		// request.setAttribute("state", theAdmin.getTheState().getState());
 		theModel.addAttribute("admin", theAdmin);
 
 		return "add_user";
